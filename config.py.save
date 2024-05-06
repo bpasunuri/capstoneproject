@@ -1,0 +1,13 @@
+customhost = "database-1.cpyuiyiu6qao.ap-south-1.rds.amazonaws.com"
+customuser = "admin"
+custompass = "admin123"
+customdb = "sample"
+custombucket = "s3-dynamodb-metadata "
+
+
+
+
+
+
+
+customregion = "ap-south-1"
