@@ -77,20 +77,34 @@ def AddEmp():
     print("All modifications done...")
     return render_template('AddEmpOutput.html', name=emp_name)
 
-@app.route("/getemp", methods=['POST'])
-def GetEmpInfo():
-    if request.method == 'POST':
-        emp_id = request.form['emp_id']
+def GetEmp():
+    if request.method == 'GET':
+        return render_template('GetEmp.html')
+    elif request.method == 'POST':
         try:
             with db_conn.cursor() as cursor:
-                select_sql = f"SELECT * FROM employee WHERE emp_id = %s"
-                cursor.execute(select_sql, (emp_id,))
-                result = cursor.fetchone()
-                if result:
-                    # Render a template to display employee information
-                    return render_template('EmpInfo.html', data=result)
-                else:
-                    return "Employee not found"
+                employee_ids = request.form.get('emp_ids', '').split(',')
+                location = request.form.get('location', '')
+
+                conditions = []
+                params = []
+
+                if employee_ids:
+                    conditions.append('emp_id IN %s')
+                    params.append(tuple(employee_ids))
+
+                if location:
+                    conditions.append('location = %s')
+                    params.append(location)
+
+                where_clause = ' AND '.join(conditions)
+                if where_clause:
+                    where_clause = 'WHERE ' + where_clause
+
+                select_sql = f"SELECT * FROM employee {where_clause}"
+                cursor.execute(select_sql, params)
+                result = cursor.fetchall()
+                return render_template('GetEmpOutput.html', data=result)
         except Exception as e:
             return str(e)
 
