@@ -1,0 +1,26 @@
+Install Necessary Software:
+You’ll need to install specific software on your machines. For the “Master” machine, install “Java,” “Jenkins,” “Ansible,” “Docker,” and “Python.” On both slave machines, install “Java” and “Docker.”
+Create three instances named “Master,” “Slave1,” and “Slave2” in your AWS EC2 console.
+Configure the instances with the appropriate AMIs, instance types, security groups, and key pairs.
+Git Workflow:
+Implement a Git workflow for version control. Ensure that developers follow best practices, such as feature branches, pull requests, and code reviews.
+CodeBuild Automation:
+Set up CodeBuild to automatically trigger builds when commits are made to the master or develop branch.
+For master branch commits:
+Build the code.
+Test it.
+Push to production if tests pass.
+For develop branch commits:
+Build the code.
+Test it.
+Do not push to production.
+Containerize with Docker:
+Create a Dockerfile for your application.
+Build the Docker image every time there’s a push to GitHub.
+Use the pre-built container “hshar/webapp.”
+Ensure that your code resides in the ‘/var/www/html’ directory within the container.
+Jenkins Pipeline:
+Define a Jenkins Pipeline with the following jobs:
+Job1: Build (for building the code)
+Job2: Test (for testing the product)
+Job3: Prod (for pushing to production if applicable)
